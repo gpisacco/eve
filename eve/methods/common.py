@@ -397,7 +397,11 @@ def resolve_user_restricted_access(document, resource):
     auth_field = resource_def['auth_field']
     if auth and auth_field:
         if auth.request_auth_value and request.authorization:
-            document[auth_field] = auth.request_auth_value
+            if isinstance(auth_field,basestring):
+                document[auth_field] = auth.request_auth_value
+            else:
+                for i,f in enumerate(auth_field):
+                    document[f] = auth.request_auth_value[i]
 
 
 def pre_event(f):
