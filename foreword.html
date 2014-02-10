@@ -1,0 +1,223 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Foreword &mdash; Eve 0.3-dev documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Eve 0.3-dev documentation" href="index.html" />
+    <link rel="next" title="Installation" href="install.html" />
+    <link rel="prev" title="Python REST API Framework" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+  
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="install.html" title="Installation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Python REST API Framework"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Eve 0.3-dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="foreword">
+<span id="id1"></span><h1>Foreword<a class="headerlink" href="#foreword" title="Permalink to this headline">¶</a></h1>
+<p>Read this before you get started with Eve. This hopefully answers some
+questions about the purpose and goals of the project, and when you should or
+should not be using it.</p>
+<div class="section" id="philosophy">
+<h2>Philosophy<a class="headerlink" href="#philosophy" title="Permalink to this headline">¶</a></h2>
+<p>You have data stored somewhere and you want to expose it to your users
+through a RESTful Web API. Eve is the tool that allows you to do so.</p>
+<p>Eve provides a robust, feature rich, REST-centered API implementation,
+and you just need to configure your API settings and behavior, plug in your
+datasource, and you&#8217;re good to go. See <a class="reference internal" href="features.html"><em>Features</em></a> for a list
+of features available to Eve-powered APIs.</p>
+<p>API settings are stored in a standard Python module (defaults to
+<tt class="docutils literal"><span class="pre">settings.py</span></tt>), which makes customization quite a trivial task. It is also
+possible to extend some key features, namely <a class="reference internal" href="authentication.html#auth"><em>Authentication and Authorization</em></a>, <a class="reference internal" href="validation.html#validation"><em>Data Validation</em></a> and
+Data Access, by providing the Eve engine with custom objects.</p>
+</div>
+<div class="section" id="a-little-context">
+<h2>A little context<a class="headerlink" href="#a-little-context" title="Permalink to this headline">¶</a></h2>
+<p>At <a class="reference external" href="http://gestionaleamica.com">Gestionale Amica</a> we had been working hard on
+a full featured, Python powered, RESTful Web API. We learned quite a few things
+on REST best patterns, and we had a chance to put Python&#8217;s renowned web
+capabilities to the test. Then, at EuroPython 2012, I had the opportunity to share
+what we learned.  My talk sparked quite a bit of interest, and even after a few
+months had passed, the slides were still receiving a lot of hits every day.
+I kept receiving emails asking for source code examples and whatnot. After all,
+a REST API lies in the future of every web-oriented developer, and who isn&#8217;t
+one these days?</p>
+<p>So, I thought, perhaps I could take the proprietary, closed code (codenamed
+&#8216;Adam&#8217;) and refactor it &#8220;just a little bit&#8221;, so that it could fit a much wider
+number of use cases. I could then release it as an open source project. Well
+it turned out to be slightly more complex than that but finally here it is, and
+of course it&#8217;s called Eve.</p>
+<p>It still has a long way to go before it becomes the fully featured open source,
+out-of-the-box API solution I envision (see the Roadmap below), but
+I feel that at this point the codebase is ready for a public preview.
+This will hopefully allow for some constructive feedback and maybe, for some
+contributors to join the ranks.</p>
+</div>
+<div class="section" id="rest-flask-and-mongodb">
+<h2>REST, Flask and MongoDB<a class="headerlink" href="#rest-flask-and-mongodb" title="Permalink to this headline">¶</a></h2>
+<p>The slides from my EuroPython talk, <em>Developing RESTful Web APIs with Flask and
+MongoDB</em>, are <a class="reference external" href="https://speakerdeck.com/u/nicola/p/developing-restful-web-apis-with-python-flask-and-mongodb">available online</a>. You might want to check them out to understand
+why and how certain design decisions were made, especially with regards to REST
+implementation.</p>
+</div>
+<div class="section" id="roadmap">
+<h2>Roadmap<a class="headerlink" href="#roadmap" title="Permalink to this headline">¶</a></h2>
+<p>In no particular order, here&#8217;s a partial list of the features that I plan/would
+like to add to Eve, provided that there is enough interest in the project.</p>
+<ul class="simple">
+<li>Documentation (working on it!)</li>
+<li>Granular exception handling</li>
+<li>Journaling/logging</li>
+<li>Server side caching</li>
+<li>Alternative sort syntax (<tt class="docutils literal"><span class="pre">?sort=name</span></tt>)</li>
+<li>More authentication schemes</li>
+<li>Support for MySQL and/or other SQL/NoSQL databases</li>
+</ul>
+</div>
+<div class="section" id="bsd-license">
+<h2>BSD License<a class="headerlink" href="#bsd-license" title="Permalink to this headline">¶</a></h2>
+<p>A large number of open source projects you find today are GPL Licensed. While
+the GPL has its time and place, it should most certainly not be your go-to
+license for your next open source project.</p>
+<p>A project that is released as GPL cannot be used in any commercial product
+without the product itself also being offered as open source.</p>
+<p>The MIT, BSD, ISC, and Apache2 licenses are great alternatives to the GPL that
+allow your open-source software to be used freely in proprietary, closed-source
+software.</p>
+<p>Eve is released under terms of the BSD License. See <a class="reference internal" href="license.html#license"><em>Licensing</em></a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p class="logo">
+  <a href="index.html">
+      <img class="logo" src="_static/eve-sidebar.png" alt="Logo"/>
+  </a>
+</p>
+<p>
+  <iframe src="http://ghbtns.com/github-btn.html?user=nicolaiarocci&repo=eve&type=watch&count=true&size=large"
+    allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p> 
+<!--<h3>About Eve</h3>-->
+<p>
+  You are looking at the documentation of the development version.
+</p>
+<h3>Support Eve</h3>
+<p>If your organization uses Eve, consider financial support:</p>
+<p>
+<a href="https://gum.co/EhzI" class="gumroad-button">Eve Pro</a> <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
+</p>
+<h3>Get Updates</h3>
+<p>Receive updates on new releases and upcoming projects.</p>
+<p>
+<a href="http://tinyletter.com/nicolaiarocci">Subscribe to Newsletter</a>
+</p>
+<h3>Useful Links</h3>
+<ul>
+  <li><a href="http://stackoverflow.com/questions/tagged/eve">Stack Overflow</a></li>
+  <li><a href="https://groups.google.com/forum/#!forum/python-eve">Mailing List</a></li>
+  <li><a href="http://github.com/nicolaiarocci/eve/issues">Issue Tracker</a></li>
+  <li><a href="http://github.com/nicolaiarocci/eve">GitHub</a></li>
+  <li><a href="http://blog.python-eve.org/">Blog</a></li>
+  <li><a href="http://github.com/nicolaiarocci/eve-demo">Demo</a></li>
+  <li><a href="irc://irc.freenode.net/python-eve">IRC</a>
+</ul>
+<h3>Feedback</h3>
+<p>
+  Feedback is greatly appreciated. If you have any questions, comments,
+  random praise, or anonymous threats, get on the <a href="https://groups.google.com/forum/#!forum/python-eve">mailing list</a> or <a href="mailto:eve@nicolaiarocci.com">
+  shoot an email</a>.
+</p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Foreword</a><ul>
+<li><a class="reference internal" href="#philosophy">Philosophy</a></li>
+<li><a class="reference internal" href="#a-little-context">A little context</a></li>
+<li><a class="reference internal" href="#rest-flask-and-mongodb">REST, Flask and MongoDB</a></li>
+<li><a class="reference internal" href="#roadmap">Roadmap</a></li>
+<li><a class="reference internal" href="#bsd-license">BSD License</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Python REST API Framework</a></li>
+      <li>Next: <a href="install.html" title="next chapter">Installation</a></li>
+  </ul></li>
+</ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2014. A <a href="http://nicolaiarocci.com">Nicola Iarocci</a> Project.
+  </div>
+  <a href="https://github.com/nicolaiarocci/eve" class="github">
+      <img style="position: absolute; top: 0; right: 0; border: 0;" src="_static/forkme_right_green_007200.png" alt="Fork me on GitHub"  class="github"/>
+  </a>
+  
+  </body>
+</html>

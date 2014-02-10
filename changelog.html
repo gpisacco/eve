@@ -1,0 +1,691 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Eve Changelog &mdash; Eve 0.3-dev documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Eve 0.3-dev documentation" href="index.html" />
+    <link rel="prev" title="Licensing" href="license.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+  
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="license.html" title="Licensing"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Eve 0.3-dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="eve-changelog">
+<span id="changelog"></span><h1>Eve Changelog<a class="headerlink" href="#eve-changelog" title="Permalink to this headline">¶</a></h1>
+<p>Here you can see the full list of changes between each Eve release.</p>
+<div class="section" id="version-0-3">
+<h2>Version 0.3<a class="headerlink" href="#version-0-3" title="Permalink to this headline">¶</a></h2>
+<p>Not released yet.</p>
+<ul class="simple">
+<li>[fix] Add tests for <tt class="docutils literal"><span class="pre">PUT</span></tt> when User Restricted Resource Access is active.</li>
+<li>[fix] Auth field not set if resource level authentication is set. Fixes #231.</li>
+<li>[fix] RateLimit check was occasionally failing and returning a 429 (John
+Deng).</li>
+<li>[change] Jinja2 2.7.2 is now required.</li>
+<li>[new] media files (images, pdf, etc.) can be uploaded as <tt class="docutils literal"><span class="pre">media</span></tt> document
+fields. When a document is requested, eventual media files will be returned
+as Base64 strings. Upload is done via <tt class="docutils literal"><span class="pre">POST</span></tt>, <tt class="docutils literal"><span class="pre">PUT</span></tt> and <tt class="docutils literal"><span class="pre">PATCH</span></tt> using
+the <tt class="docutils literal"><span class="pre">multipart/data-form</span></tt> content-type. For optmized performance, by
+default files are stored in GridFS, however custom <tt class="docutils literal"><span class="pre">MediaStorage</span></tt> classes
+can be provided to support alternative storage systems. Clients and API
+maintainers can exploit the projections feature to include/exclude media
+fields from requests. For example, a request like
+<tt class="docutils literal"><span class="pre">/url/&lt;id&gt;?projection={&quot;image&quot;:</span> <span class="pre">0}</span></tt> will return the document without the
+image field. Also, while setting a resource <tt class="docutils literal"><span class="pre">datasource</span></tt> it is possible to
+explicitly exclude media fields from standard responses (clients will need to
+explicitly add them to the payload with <tt class="docutils literal"><span class="pre">?projection={&quot;image&quot;:</span> <span class="pre">1}</span></tt>).</li>
+<li>[new] <tt class="docutils literal"><span class="pre">media</span></tt> type for schema fields.</li>
+<li>[new] <tt class="docutils literal"><span class="pre">media</span></tt> application argument. Allows to specify a media storage class
+to be used to store media files. Defaults to <tt class="docutils literal"><span class="pre">GridFSMediaStorage</span></tt>.</li>
+<li>[new] <tt class="docutils literal"><span class="pre">GridFSMediaStorage</span></tt> class. Stores files into GridFS.</li>
+<li>[new] <tt class="docutils literal"><span class="pre">MediaStorage</span></tt> class provides a standardized API for storing files,
+along with a set of default behaviors that all other storage systems can
+inherit or override as necessary.</li>
+<li>[new] <tt class="docutils literal"><span class="pre">file</span></tt> data type support and validation for resource schema.</li>
+<li>[new] <tt class="docutils literal"><span class="pre">multipart/form-data</span></tt> content-type is now supported for requests.</li>
+<li>[fix] Field exclusion (<tt class="docutils literal"><span class="pre">?projection={&quot;fieldname&quot;:</span> <span class="pre">0}</span></tt>) now supported in
+client projections. Remember, mixing field inclusion and exclusion is still
+not supported by MongoDB.</li>
+<li>[fix] <tt class="docutils literal"><span class="pre">URL_PREFIX</span></tt> and <tt class="docutils literal"><span class="pre">API_VERSION</span></tt> are correctly reported in HATOEAS
+links.</li>
+<li>[fix] <tt class="docutils literal"><span class="pre">DELETE</span></tt> on sub-resources should only delete documents referenced by
+the parent. Closes #212.</li>
+<li>[fix] <tt class="docutils literal"><span class="pre">DELETE</span></tt> on a resource endpoint honors User-Restricted Resource
+Access. Closes #213.</li>
+<li>[new] <tt class="docutils literal"><span class="pre">JSON</span></tt> allows to enable/disable JSON responses. Defaults to <tt class="docutils literal"><span class="pre">True</span></tt>
+(JSON enabled).</li>
+<li>[new] <tt class="docutils literal"><span class="pre">XML</span></tt> allows to enable/disable XML responses. Defaults to <tt class="docutils literal"><span class="pre">True</span></tt>
+(XML enabled).</li>
+<li>[fix] XML properly honors <tt class="docutils literal"><span class="pre">_LINKS</span></tt> and <tt class="docutils literal"><span class="pre">_ITEMS</span></tt> settings.</li>
+<li>[fix] return all document fields when resource schema is empty.</li>
+<li>[new] pytest.ini for pytest support.</li>
+<li>[fix] All tests should now run with nose and pytest. Closes #209.</li>
+<li>[new] <tt class="docutils literal"><span class="pre">query_objectid_as_string</span></tt> resource setting. Defaults to <tt class="docutils literal"><span class="pre">False</span></tt>.
+Addresses #207.</li>
+<li>[new] <tt class="docutils literal"><span class="pre">ETAG</span></tt> allows to customize the etag field. Defaults to <tt class="docutils literal"><span class="pre">_etag</span></tt>.</li>
+<li>[change] <tt class="docutils literal"><span class="pre">etag</span></tt> is now <tt class="docutils literal"><span class="pre">_etag</span></tt> in all default response payloads (see
+above).</li>
+<li>[change] <tt class="docutils literal"><span class="pre">STATUS</span></tt> defaults to &#8216;_status&#8217;.</li>
+<li>[change] <tt class="docutils literal"><span class="pre">ISSUES</span></tt> defaults to &#8216;_issues&#8217;.</li>
+<li>[change] <tt class="docutils literal"><span class="pre">DATE_CREATED</span></tt> defaults to &#8216;_created&#8217;. Upgrade existing
+collections by running <tt class="docutils literal"><span class="pre">db.&lt;collection&gt;.update({},</span> <span class="pre">{</span> <span class="pre">$rename:</span> <span class="pre">{</span> <span class="pre">&quot;created&quot;:</span>
+<span class="pre">&quot;_created&quot;</span> <span class="pre">}</span> <span class="pre">},</span> <span class="pre">{</span> <span class="pre">multi:</span> <span class="pre">true</span> <span class="pre">})</span></tt> in the mongo shell. If an index exists on
+the field, drop it and create a new one using the new field name.</li>
+<li>[change] <tt class="docutils literal"><span class="pre">LAST_UPDATED</span></tt> defaults to &#8216;_updated&#8217;. Upgrade existing
+collections by running <tt class="docutils literal"><span class="pre">db.&lt;collection&gt;.update({},</span> <span class="pre">{</span> <span class="pre">$rename:</span> <span class="pre">{</span> <span class="pre">&quot;updated&quot;:</span>
+<span class="pre">&quot;_updated&quot;</span> <span class="pre">}</span> <span class="pre">},</span> <span class="pre">{</span> <span class="pre">multi:</span> <span class="pre">true</span> <span class="pre">})</span></tt> in the mongo shell. If an index exists on
+the field, drop it and create a new one usung the new field name.</li>
+<li>[change] Exclude <tt class="docutils literal"><span class="pre">etag</span></tt> from both response payload and headers if
+concurrency control is disabled (<tt class="docutils literal"><span class="pre">IF_MATCH</span></tt> = <tt class="docutils literal"><span class="pre">False</span></tt>). Closes #205.</li>
+<li>[fix] Custom <tt class="docutils literal"><span class="pre">ID_FIELD</span></tt> would fail on update/insert methods. Fixes #203
+(Jaroslav Semančík).</li>
+<li>[change] GET: when If-Modified-Since header is present, either no documents
+(304) or all documents (200) are sent per the HTTP spec. Original behavior
+can be achieved with:
+<tt class="docutils literal"><span class="pre">/resource?where={&quot;updated&quot;:{&quot;$gt&quot;:&quot;if-modified-since-date&quot;}}</span></tt> (Josh
+Villbrandt).</li>
+<li>[change] Validation errors are now reported as a dictionary with offending
+fields as keys and issues descriptions as values.</li>
+<li>[change] Cerberus v0.5 is now required.</li>
+</ul>
+</div>
+<div class="section" id="version-0-2">
+<h2>Version 0.2<a class="headerlink" href="#version-0-2" title="Permalink to this headline">¶</a></h2>
+<p>Released on 30 November, 2013.</p>
+<ul class="simple">
+<li>[new] Sub-Resources. It is now possible to configure endpoints such as:
+<tt class="docutils literal"><span class="pre">/companies/&lt;company_id&gt;/invoices</span></tt>. Also, the corresponding item endpoints,
+such as <tt class="docutils literal"><span class="pre">/companies/&lt;company_id&gt;/invoices/&lt;invoice_id&gt;</span></tt>, are available. All
+CRUD operations on these endpoints are allowed. Closes 156.</li>
+<li>[new] <tt class="docutils literal"><span class="pre">resource_title</span></tt> allows to customize the endpoint title (HATEOAS).</li>
+<li>[new][dev] <tt class="docutils literal"><span class="pre">extra</span></tt> cursor property, when present, will be added to <tt class="docutils literal"><span class="pre">GET</span></tt>
+responses (with same key). This feature can be used by Eve extensions to
+inject proprietary data into the response stream (Petr Jašek).</li>
+<li>[new] <tt class="docutils literal"><span class="pre">IF_MATCH</span></tt> allows to disable checks for ETag matches on edit, replace
+and delete requests. If disabled, requests without an If-Match header will be
+honored without returning a 403 error. Defaults to True (enabled by default).</li>
+<li>[new] <tt class="docutils literal"><span class="pre">LINKS</span></tt> allows to customize the links field. Default to &#8216;_links&#8217;.</li>
+<li>[new] <tt class="docutils literal"><span class="pre">ITEMS</span></tt> allows to customize the items field. Default to &#8216;_items&#8217;.</li>
+<li>[new] <tt class="docutils literal"><span class="pre">STATUS</span></tt> allows to customize the status field. Default to &#8216;status&#8217;.</li>
+<li>[new] <tt class="docutils literal"><span class="pre">ISSUES</span></tt> allows to customize the issues field. Default to &#8216;issues&#8217;.</li>
+<li>[new] Handling custom ID fields tutorial.</li>
+<li>[new] A new <tt class="docutils literal"><span class="pre">json_encoder</span></tt> initialization argument is available. It allows
+to pass custom JSONEncoder or eve.io.BaseJSONEncoder to the Eve instance.</li>
+<li>[new] A new <tt class="docutils literal"><span class="pre">url_converters</span></tt> initialization argument is available. It
+allows to pass custom Flask url converters to the Eve constructor.</li>
+<li>[new] ID_FIELD fields can now be of arbitrary types, not only ObjectIds.
+Thanks to Kelvin Hammond for contributing to this one.  Closes #136.</li>
+<li>[new] <tt class="docutils literal"><span class="pre">pre_&lt;method&gt;</span></tt> and <tt class="docutils literal"><span class="pre">pre_&lt;method&gt;_&lt;resource&gt;</span></tt> event hooks are now
+available. They are raised when a request is received and before processing
+it. The resource involved and the Flask request object are returned to the
+callback function (dccrazyboy).</li>
+<li>[new] <tt class="docutils literal"><span class="pre">embedded_fields</span></tt> activates default Embedded Resource Serialization
+on a list of selected document fields. Eventual embedding requests by clients
+will be processed along with default embedding. In order for default
+embedding to work, the field must be defined as embeddable, and embedding
+must be active for the resource (with help from Christoph Witzany).</li>
+<li>[new] <tt class="docutils literal"><span class="pre">default_sort</span></tt> option added to the <tt class="docutils literal"><span class="pre">datasource</span></tt> resource setting.
+It allows to set default sorting for the endpoint. Default sorting will be
+overriden by a client request that happens to include a <tt class="docutils literal"><span class="pre">?sort</span></tt> argument
+within the query string (with help from Christoph Witzany).</li>
+<li>[new] You can now choose to provide custom settings as a Python dictionary.</li>
+<li>[new] New method <tt class="docutils literal"><span class="pre">Eve.register_resource()</span></tt> for registering new resource
+after initialization of Eve object. This is needed for simpler initialization
+API of all ORM/ODM extensions (Stanislav Heller).</li>
+<li>[change] Rely on Flask endpoints to map urls to resources.</li>
+<li>[change] For better consistency with new <tt class="docutils literal"><span class="pre">pre_&lt;method&gt;</span></tt> hooks,
+<tt class="docutils literal"><span class="pre">on_&lt;method&gt;</span></tt> event hooks have been renamed to <tt class="docutils literal"><span class="pre">on_post_&lt;method&gt;</span></tt>.</li>
+<li>[change] Custom authentication classes can now be set at endpoint level. When
+set, an endpoint-level auth class will override the eventual global level
+auth class.  Authentication docs have been updated (and greatly revised)
+accordingly.  Closes #89.</li>
+<li>[change] JSON encoding is now handled at the DataLayer level allowing for
+specialized, granular, data-aware encoding. Also, since the JSON encoder is
+now a class attribute, extensions can replace the pre-defined data layer
+encoder with their own implementation. Closes #102.</li>
+<li>[fix] HMAC example and docs updated to align with new hmac in Python 2.7.3,
+which is only accepting bytes string. Closes #199.</li>
+<li>[fix] Properly escape leaf values in XML responses (Florian Rathgeber).</li>
+<li>[fix] A read-only field with a default value would trigger a validation error
+on POST and PUT methods.</li>
+</ul>
+</div>
+<div class="section" id="version-0-1-1">
+<h2>Version 0.1.1<a class="headerlink" href="#version-0-1-1" title="Permalink to this headline">¶</a></h2>
+<p>Released on October 31th, 2013.</p>
+<div class="section" id="enhancements">
+<h3>Enhancements<a class="headerlink" href="#enhancements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>DELETE now uses the original document ID_FIELD when issuing the delete
+command to the underlying data layer (Xavi Cubillas).</li>
+<li>Embedded Resource Serialization also available at item endpoints
+(<tt class="docutils literal"><span class="pre">/invoices/&lt;id&gt;/?embedded={'person':1}</span></tt>),</li>
+<li><tt class="docutils literal"><span class="pre">collection</span></tt> (used when setting up a data relation, see Embedded Resource
+Serialization) has been renamed to <tt class="docutils literal"><span class="pre">resource</span></tt> in order to avoid confusion
+between the Eve schema and underlying MongoDB collections.</li>
+<li>Nested endpoints. Endpoints with deep paths like <tt class="docutils literal"><span class="pre">/contacts/overseas</span></tt> can
+now function in conjuction with top-level endpoints (<tt class="docutils literal"><span class="pre">/contacts</span></tt>).
+Endpoints are completely independent: each can allow item lookups
+(<tt class="docutils literal"><span class="pre">/contacts/&lt;id&gt;</span></tt> and <tt class="docutils literal"><span class="pre">contacts/overseas/&lt;id&gt;</span></tt>) and different access
+methods. Previously, while you could have complex urls, you could not get
+nested endpoints to work properly.</li>
+<li>PyMongo 2.6.3 is now supported.</li>
+<li>item-id wrappers have been removed from POST/PATCH/PUT requests and
+responses. Requests for single document insertion/edition are now performed
+by just submitting the relevant document. Bulk insert requests are performed
+by submitting a list of documents. The response to bulk requests is a list
+itself in which every list item contains the state of the corresponding
+request document. Please note that this is a breaking change. Also be aware
+that when the request content-type is <tt class="docutils literal"><span class="pre">x-www-form-urlencoded</span></tt>, single
+document insert is performed. Closes #139.</li>
+<li>ObjectId are properly serialized on POST/PATCH/PUT methods.</li>
+<li>Queries on ObjectId and datetime values in nested documents.</li>
+<li><tt class="docutils literal"><span class="pre">auth.user_id</span></tt> renamed to <tt class="docutils literal"><span class="pre">auth.request_auth_value</span></tt> for better
+consistency with the <tt class="docutils literal"><span class="pre">auth_field</span></tt> setting. Closes #132 (Ryan Shea).</li>
+<li>Same behavior as Flask, SERVER_NAME now defaults to None. It allows much
+easier development on distant machine that may changes IP (Ronan Delacroix).</li>
+</ul>
+</div>
+<div class="section" id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>CORS support was not available for <tt class="docutils literal"><span class="pre">additional_lookup</span></tt> urls (Petr Jašek.)</li>
+<li>&#8216;default&#8217; field values that could be assimilated to <tt class="docutils literal"><span class="pre">None</span></tt> (0, None, &#8220;&#8221;)
+would be ignored.</li>
+<li>POST and PUT would fail with 400 if there was no auth class while
+<tt class="docutils literal"><span class="pre">auth_field</span></tt> was set for a resource.</li>
+<li>Fix order of string arguments in exception message in
+flaskapp.validate_schema() (Roy Smith).</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-0-1">
+<h2>Version 0.1<a class="headerlink" href="#version-0-1" title="Permalink to this headline">¶</a></h2>
+<p>Released on September 30th, 2013.</p>
+<div class="section" id="new-features">
+<h3>New Features<a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">PUT</span></tt> method for completely replace a document while keeping the same
+unique identifier. Closes #96.</li>
+<li>Embedded Resource Serialization. If a document field is referencing
+a document in another resource, clients can request the referenced document
+to be embedded within the requested document (Bryan Cattle).  Closes #68.</li>
+<li>&#8220;No trailing slash&#8221; URLs are now supported. Closes #118.</li>
+<li>HATEOAS is now optional and can be disabled both at global and resource
+level.</li>
+<li><tt class="docutils literal"><span class="pre">X-HTTP-Method-Override</span></tt> supported for all HTTP Methods. Closes #95.</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h3>Enhancements<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>HTTP method is now passed into <tt class="docutils literal"><span class="pre">authenticate()</span></tt> and <tt class="docutils literal"><span class="pre">check_auth()</span></tt> (Ken
+Carpenter). Closes #90 .</li>
+<li>Cleanup and hardening of User-Restricted Resource Access Edit (Bryan Cattle).</li>
+<li>Account Management tutorial updated to reflect the event hooks naming update
+introduced in v0.0.9.</li>
+<li>Some more Python 3 refactoring (Dong Wei Ming).</li>
+<li>Events 0.2.0 is now supported.</li>
+<li>PyMongo 2.6.2 is now supported.</li>
+<li>Cerberus 0.4.0 is now supported.</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h3>Fixes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Item <tt class="docutils literal"><span class="pre">GET</span></tt> on documents with non-existent &#8216;created&#8217; field (because
+stored outside of API context) were not returning a default value for the
+field.</li>
+<li>Edits on documents with non-existent &#8216;created&#8217; or &#8216;updated&#8217; fields
+(because stored outside of the API context) were returning <tt class="docutils literal"><span class="pre">412</span> <span class="pre">Precondition</span>
+<span class="pre">Failed</span></tt>. Closes #123.</li>
+<li><tt class="docutils literal"><span class="pre">on_insert</span></tt> is raised when a <tt class="docutils literal"><span class="pre">PUT</span></tt> (replace action) is about to be
+performed. Closes #120.</li>
+<li>Installation on Windows with Python 3 was returning encoding errors.</li>
+<li>Fixed #99: malformed XML render when href includes forbidden URI/URL chars.</li>
+<li>Fixed a bug introduced with 0.0.9 and Python 3 support. Filters (<tt class="docutils literal"><span class="pre">?where</span></tt>)
+on datetime values were not working when running on Python 2.x.</li>
+<li>Fixed some typos and minor grammatical errors all across the documentation
+(Ken Carpenter, Jean Boussier, Kracekumar, Francisco Corrales Morales).</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-0-0-9">
+<h2>Version 0.0.9<a class="headerlink" href="#version-0-0-9" title="Permalink to this headline">¶</a></h2>
+<p>Released on August 29, 2013</p>
+<ul class="simple">
+<li>PyMongo 2.6 is now supported.</li>
+<li><tt class="docutils literal"><span class="pre">FILTERS</span></tt> boolean replaced by <tt class="docutils literal"><span class="pre">ALLOWED_FILTERS</span></tt> list which allows for
+explicit whitelisting of filter-enabled fields (Bryan Cattle). Closes #78.</li>
+<li>Custom user ids for User-Restricted Resource Access, allowing for more
+flexibility and token revocation with token-based authentication. Closes #73.</li>
+<li><tt class="docutils literal"><span class="pre">AUTH_USERNAME_FIELD</span></tt> renamed to <tt class="docutils literal"><span class="pre">AUTH_FIELD</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">auth_username_field</span></tt> renamed to <tt class="docutils literal"><span class="pre">auth_field</span></tt>.</li>
+<li>BasicAuth and subclasses now support <tt class="docutils literal"><span class="pre">user_id</span></tt> property.</li>
+<li>Updated the event hooks naming system to be more robuts and consistent.
+Closes #80.</li>
+<li>To emphasize the fact that they are tied to a method, all <tt class="docutils literal"><span class="pre">on_&lt;method&gt;</span></tt>
+hooks now have <tt class="docutils literal"><span class="pre">&lt;method&gt;</span></tt> in uppercase.</li>
+<li><tt class="docutils literal"><span class="pre">on_getting</span></tt> hook renamed to <tt class="docutils literal"><span class="pre">on_fetch_resource</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">on_getting_&lt;resource&gt;</span></tt> hook renamed to <tt class="docutils literal"><span class="pre">on_fetch_resource_&lt;resource&gt;</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">on_getting_item</span></tt> hook renamed to <tt class="docutils literal"><span class="pre">on_fetch_item</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">on_getting_item_&lt;item_title&gt;</span></tt> hook renamed to
+<tt class="docutils literal"><span class="pre">on_fetch_item_&lt;item_title&gt;</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">on_posting</span></tt> hook renamed to <tt class="docutils literal"><span class="pre">on_insert</span></tt>.</li>
+<li>Datasource  projections always include automatic fields (<tt class="docutils literal"><span class="pre">ID_FIELD</span></tt>,
+<tt class="docutils literal"><span class="pre">LAST_UPDATED</span></tt>, <tt class="docutils literal"><span class="pre">DATE_CREATED</span></tt>). Closes #85.</li>
+<li>Public HTTP methods now override <cite>auth_username_field</cite> Edit. Closes #70
+(Bryan Cattle).</li>
+<li>Response date fields are now using GMT instead of UTC. Closes #83.</li>
+<li>Handle the case of &#8216;additional_lookup&#8217; field being an integer. If this is the
+case you can omit the &#8216;url&#8217; key, as it will be ignored, and the integer value
+correctly parsed.</li>
+<li>More informative HTTP error messages. Some more informative error messages
+have been added for HTTP 400/3/12 and 500 errors. The error messages only
+show if DEBUG==True (Bryan Cattle).</li>
+<li><tt class="docutils literal"><span class="pre">on_getting(resource,</span> <span class="pre">documents)</span></tt> is now <tt class="docutils literal"><span class="pre">on_getting_resource(resource,</span>
+<span class="pre">documents)</span></tt>; <tt class="docutils literal"><span class="pre">on_getting_&lt;resource&gt;(documents)</span> <span class="pre">is</span> <span class="pre">now</span> <span class="pre">known</span> <span class="pre">as</span>
+<span class="pre">``on_getting_resource_&lt;resource&gt;(documents)</span></tt> (Ryan Shea).</li>
+<li>Added a new event hook: <tt class="docutils literal"><span class="pre">on_getting_item_&lt;title&gt;(_id,</span> <span class="pre">document)</span></tt> (Ryan
+Shea).</li>
+<li>Allow <tt class="docutils literal"><span class="pre">auth_username_field</span></tt> to be set to <tt class="docutils literal"><span class="pre">ID_FIELD</span></tt> (Bryan Cattle).</li>
+<li>Python 3.3 is now supported.</li>
+<li>Flask 0.10.1 is now supported.</li>
+<li>Werkzeug 0.9.4 is now supported.</li>
+<li>Copyright finally updated to 2013.</li>
+</ul>
+</div>
+<div class="section" id="version-0-0-8">
+<h2>Version 0.0.8<a class="headerlink" href="#version-0-0-8" title="Permalink to this headline">¶</a></h2>
+<p>Released on July 25th 2013.</p>
+<ul class="simple">
+<li>Only run RateLimiting tests if redis-py is installed and redis-server is
+running.</li>
+<li>CORS <tt class="docutils literal"><span class="pre">Access-Control-Allow-Headers</span></tt> header support (Garrin Kimmell).</li>
+<li>CORS <tt class="docutils literal"><span class="pre">OPTIONS</span></tt> support for resource and items endpoints (Garrin Kimmell).</li>
+<li><tt class="docutils literal"><span class="pre">float</span></tt> is now available as a data-type in the schema definition ruleset.</li>
+<li><tt class="docutils literal"><span class="pre">nullable</span></tt> field schema rule is now available. If <tt class="docutils literal"><span class="pre">True</span></tt> the field value
+can be set to null. Defaults to <tt class="docutils literal"><span class="pre">False</span></tt>.</li>
+<li>v0.3.0 of Cerberus is now a requirement.</li>
+<li><tt class="docutils literal"><span class="pre">on_getting</span></tt>, <tt class="docutils literal"><span class="pre">on_getting_&lt;resource&gt;</span></tt> and <tt class="docutils literal"><span class="pre">on_getting_item</span></tt> event
+hooks. These events are raised when documents have just been read from the
+database and are about to be sent to the client. Registered callback
+functions can eventually manipulate the documents as needed. Please be aware
+that <tt class="docutils literal"><span class="pre">last_modified</span></tt> and <tt class="docutils literal"><span class="pre">etag</span></tt> headers will always be consistent with
+the state of the documents on the database (they  won&#8217;t be updated to reflect
+changes eventually applied by the callback functions). Closes #65.</li>
+<li>Documentation fix: <tt class="docutils literal"><span class="pre">AUTH_USERFIELD_NAME</span></tt> renamed to <tt class="docutils literal"><span class="pre">AUTH_USERNAME_FIELD</span></tt>
+(Julien Barbot).</li>
+<li>Responses to GET requests for resource endpoints now include a <tt class="docutils literal"><span class="pre">last</span></tt> item
+in the <cite>_links</cite> dictionary. The value is a link to the last page available.
+The item itself is only provided if pagination is enabled and the page being
+requested isn&#8217;t the last one. Closes #62.</li>
+<li>It is now possible to set the MongoDB write concern level at both global
+(<tt class="docutils literal"><span class="pre">MONGO_WRITE_CONCERN</span></tt>) and endpoint (<tt class="docutils literal"><span class="pre">mongo_write_concern</span></tt>) levels. The
+value is a dictionary with all valid MongoDB write_concern settings (w,
+wtimeout, j and fsync) as keys. <tt class="docutils literal"><span class="pre">{'w':</span> <span class="pre">1}</span></tt> is the default, which is also
+MongoDB&#8217;s default setting.</li>
+<li><tt class="docutils literal"><span class="pre">TestMininal</span></tt> class added to the test suite. This will allow to start the
+building of the tests for an application based on Eve, by subclassing the
+TestMinimal class (Daniele Pizzolli).</li>
+</ul>
+</div>
+<div class="section" id="version-0-0-7">
+<h2>Version 0.0.7<a class="headerlink" href="#version-0-0-7" title="Permalink to this headline">¶</a></h2>
+<p>Released on June 18th 2013.</p>
+<ul class="simple">
+<li>Pinned Werkzeug requirement to v0.8.3 to avoid issues with the latest release
+which breaks backward compatibility (actually a Flask 0.9 requirements issue,
+which backtracked to Eve).</li>
+<li>Support for Rate Limiting on all HTTP methods. Closes #58. Please note: to
+successfully execute the tests in &#8216;eve.tests.methods.ratelimit.py`, a running
+redis server is needed.</li>
+<li><tt class="docutils literal"><span class="pre">utils.request_method</span></tt> internal helper function added, which allowed  for
+some nice code cleanup (DRY).</li>
+<li>Setting the default &#8216;field&#8217; value would not happen if a &#8216;data_relation&#8217; was
+nested deeper than the first schema level. Fixes #60.</li>
+<li>Support for <tt class="docutils literal"><span class="pre">EXTRA_RESPONSE_FIELDS</span></tt>. It is now possible to configure a list
+of additonal document fields that should be provided with POST responses.
+Normally only automatically handled fields (<tt class="docutils literal"><span class="pre">ID_FIELD</span></tt>, <tt class="docutils literal"><span class="pre">LAST_UPDATED</span></tt>,
+<tt class="docutils literal"><span class="pre">DATE_CREATED</span></tt>, <tt class="docutils literal"><span class="pre">etag</span></tt>) are included in POST payloads.
+<tt class="docutils literal"><span class="pre">EXTRA_RESPONSE_FIELDS</span></tt> is a global setting that will apply to all resource
+endpoint . Defaults to <tt class="docutils literal"><span class="pre">[]</span></tt>, effectively disabling the feature.
+<tt class="docutils literal"><span class="pre">extra_response_fields</span></tt> is a local resource setting and will override
+<tt class="docutils literal"><span class="pre">EXTRA_RESPONSE_FIELDS</span></tt> when present.</li>
+<li><tt class="docutils literal"><span class="pre">on_posting</span></tt> and <tt class="docutils literal"><span class="pre">on_posting_&lt;resource&gt;</span></tt> event hooks. <tt class="docutils literal"><span class="pre">on_posting</span></tt> and
+<tt class="docutils literal"><span class="pre">on_posting_&lt;resource&gt;</span></tt> events are raised when documents are about to be
+stored. Among other things this allows callback functions to arbitrarily
+update the documents being inserted. <tt class="docutils literal"><span class="pre">on_posting(resource,</span> <span class="pre">documents)</span></tt> is
+raised on every successful POST while <tt class="docutils literal"><span class="pre">on_posting_&lt;resource&gt;(documents)</span></tt> is
+only raised when &lt;resource&gt; is being updated. In both circumstances events
+will be raised only if at least one document passed validation and is going
+to be inserted.</li>
+<li>Flask native <tt class="docutils literal"><span class="pre">request.json</span></tt> is now used when decoding request payloads.</li>
+<li><em>resource</em> argument added to Authorization classes. The <tt class="docutils literal"><span class="pre">check_auth()</span></tt>
+method of all classes in the <tt class="docutils literal"><span class="pre">eve.auth</span></tt> package (<tt class="docutils literal"><span class="pre">BasicAuth</span></tt>,
+<tt class="docutils literal"><span class="pre">HMACAuth</span></tt>, <tt class="docutils literal"><span class="pre">TokenAuth</span></tt>) now supports the <em>resource</em> argument. This
+allows subclasses to eventually build their custom authorization logic around
+the resource being accessed.</li>
+<li><tt class="docutils literal"><span class="pre">MONGO_QUERY_BLACKLIST</span></tt> option added. Allows to blacklist mongo query
+operators that should not be allowed in resource queries (<tt class="docutils literal"><span class="pre">?where=</span></tt>).
+Defaults to [&#8216;$where&#8217;, &#8216;$regex&#8217;]. Mongo Javascript operators are disabled by
+default as they might be used as vectors for injection attacks. Javascript
+queries also tend to be slow and generally can be easily replaced with the
+(very rich) Mongo query dialect.</li>
+<li><tt class="docutils literal"><span class="pre">MONGO_HOST</span></tt> defaults to &#8216;localhost&#8217;.</li>
+<li><tt class="docutils literal"><span class="pre">MONGO_PORT</span></tt> defaults to 27017.</li>
+<li>Support alternative hosts/ports for the test suite (Paul Doucet).</li>
+</ul>
+</div>
+<div class="section" id="version-0-0-6">
+<h2>Version 0.0.6<a class="headerlink" href="#version-0-0-6" title="Permalink to this headline">¶</a></h2>
+<p>Released on May 13th 2013.</p>
+<ul class="simple">
+<li>Content-Type header now properly parsed when additional arguments are
+included (Ondrej Slinták).</li>
+<li>Only fields defined in the resource schema are now returned from the
+database. Closes #52.</li>
+<li>Default <tt class="docutils literal"><span class="pre">SERVER_NAME</span></tt> is now set to <tt class="docutils literal"><span class="pre">127.0.0.1:5000</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">auth_username_field</span></tt> is honored even when there is no query in the request
+(Thomas Sileo).</li>
+<li>Pagination links in XML payloads are now properly escaped. Fixes #49.</li>
+<li>HEAD requests supported. Closes #48.</li>
+<li>Event Hooks. Each time a GET, POST, PATCH, DELETE method has been executed,
+both global <tt class="docutils literal"><span class="pre">on_&lt;method&gt;</span></tt> and resource-level <tt class="docutils literal"><span class="pre">on_&lt;method&gt;_&lt;resource&gt;</span></tt>
+events will be raised. You can subscribe to these events with multiple
+callback functions. Callbacks will receive the original flask.request object
+and the response payload as arguments.</li>
+<li>Proper <tt class="docutils literal"><span class="pre">max_results</span></tt> handling in <tt class="docutils literal"><span class="pre">eve.utils.parse_request</span></tt>, refactored
+tests (Tomasz Jezierski).</li>
+<li>Projections. Projections are conditional queries where the client dictates
+which fields should be returned by the API (Nicolas Bazire).</li>
+<li><tt class="docutils literal"><span class="pre">ALLOW_UNKNOWN</span></tt> option, and the corresponding <tt class="docutils literal"><span class="pre">allow_options</span></tt> local
+setting, allow for a less strict schema validation. Closes #34.</li>
+<li>ETags are now provided with POST responses. Closes #36.</li>
+<li>PATCH performance improvement: ETag is now computed in memory; performing an
+extra database lookup is not needed anymore.</li>
+<li>Bulk Inserts on the database. POST method heavily refactored to take
+advantage of MongoDB native support for Bulk Inserts. Please note: validation
+constraints are checked against the database, and not between the payload
+documents themselves. This causes an interesting corner case: in the event of
+a multiple documents payload where two or more documents carry the same value
+for a field where the <tt class="docutils literal"><span class="pre">unique</span></tt> constraint is set, the payload will validate
+successfully, as there are no duplicates in the database (yet). If this is an
+issue, the client can always send the documents once at a time for insertion,
+or validate locally before submitting the payload to the API.</li>
+<li>Responses to document GET requests now include the ETag in both the header
+and the payload. Closes #29.</li>
+<li><tt class="docutils literal"><span class="pre">methods</span></tt> settings keyword renamed to <tt class="docutils literal"><span class="pre">resource_methods</span></tt> for coherence
+with the global <tt class="docutils literal"><span class="pre">RESOURCE_METHODS</span></tt> (Nicolas Carlier).</li>
+</ul>
+</div>
+<div class="section" id="version-0-0-5">
+<h2>Version 0.0.5<a class="headerlink" href="#version-0-0-5" title="Permalink to this headline">¶</a></h2>
+<p>Released on April 11th 2013.</p>
+<ul class="simple">
+<li>Fixed an issue that apparently caused the test suite to only run successfully
+on the dev box. Thanks Chronidev for reporting this.</li>
+<li>Referential integrity validation via the new <tt class="docutils literal"><span class="pre">data_relation</span></tt> schema
+keyword.  Closes #25.</li>
+<li>Support for <tt class="docutils literal"><span class="pre">Content-Type:</span> <span class="pre">application/json</span></tt> for POST and PATCH methods.
+Closes #28.</li>
+<li>User-restricted resource access. Works in conjunction with Authentication.
+When enabled, users can only read/update/delete resource items created by
+themselves. Can be switched on and off at global level via the
+<tt class="docutils literal"><span class="pre">AUTH_USERFIELD_NAME</span></tt> keywork, or at single resource endpoints with the
+user_userfield_name keyword (the latter will override the former). The
+keyword contains the actual name of the field used to store the username of
+the user who created the resource item. Defaults to &#8216;&#8217;, which disables the
+feature (Thomas Sileo).</li>
+<li><tt class="docutils literal"><span class="pre">PAGING_LIMIT</span></tt> keyword setting renamed to <tt class="docutils literal"><span class="pre">PAGINATION_LIMIT</span></tt> for better
+coherency with the new <tt class="docutils literal"><span class="pre">PAGINATION</span></tt> keyword. This could break backward
+compatibility in some cases.</li>
+<li><tt class="docutils literal"><span class="pre">PAGING_DEFAULT</span></tt> keyword settings renamed to <tt class="docutils literal"><span class="pre">PAGINATION_DEFAULT</span></tt> for
+better coherence with the new <tt class="docutils literal"><span class="pre">PAGINATION</span></tt> keyword. This could break
+backward compatibility in some cases.</li>
+<li><tt class="docutils literal"><span class="pre">ITEM_CACHE_CONTROL</span></tt> removed as it seems unnecessary at the moment.</li>
+<li>Added an example on how to handle events to perform custom actions. Closes
+#23 and #22.</li>
+<li><tt class="docutils literal"><span class="pre">eve.validation_schema()</span></tt> now collects offending items and returns all of
+them into the exception message. Closes #24.</li>
+<li>Filters (<tt class="docutils literal"><span class="pre">?where=</span></tt>), sorting (<tt class="docutils literal"><span class="pre">?sort=</span></tt>) and pagination (<tt class="docutils literal"><span class="pre">?page=10</span></tt>) can
+now be be disabled at both global and endpoint level. Closes #7.</li>
+<li>CORS (Cross-Origin Resource Sharing) support. The new <tt class="docutils literal"><span class="pre">X-DOMAINS</span></tt> keywords
+allows API maintainers to specify which domains are allowed to perform CORS
+requests. Allowed values are: None, a list of domains, or &#8216;*&#8217; for a wide-open
+API. Closes #1.</li>
+<li>HMAC (Hash Message Authentication Code) based Autentication.</li>
+<li>Token Based Authentication, a variation of Basic Authentication. Closes #20.</li>
+<li>Orphan function removed (<tt class="docutils literal"><span class="pre">eve.methods.get.standard_links</span></tt> ).</li>
+<li><tt class="docutils literal"><span class="pre">DATE_CREATED</span></tt> and <tt class="docutils literal"><span class="pre">LAST_UPDATED</span></tt> fields now show default values for
+documents created outside the API context. Fixes #18.</li>
+</ul>
+</div>
+<div class="section" id="version-0-0-4">
+<h2>Version 0.0.4<a class="headerlink" href="#version-0-0-4" title="Permalink to this headline">¶</a></h2>
+<p>Released on February 25th 2013.</p>
+<ul class="simple">
+<li>Consistent ETag computation between runs/instances. Closes #16.</li>
+<li>Support for Basic Authentication (RFC2617).</li>
+<li>Support for fine-tuning authentication with <tt class="docutils literal"><span class="pre">PUBLIC_METHODS</span></tt> and
+<tt class="docutils literal"><span class="pre">PUBLIC_ITEM_METHODS</span></tt>. By default, access is restricted to <em>all</em> endpoints,
+for <em>all</em> HTTP verbs (methods), effectively locking down the whole API.</li>
+<li>Supporto for role-based access control with <tt class="docutils literal"><span class="pre">ALLOWED_ROLES</span></tt> and
+<tt class="docutils literal"><span class="pre">allowed_roles</span></tt>.</li>
+<li>Support for all standard Flask initialization parameters.</li>
+<li>Support for default values in resource fields. The new <tt class="docutils literal"><span class="pre">default</span></tt> keyword
+can now be used when defining a field rule set.  Please note: currently
+default values are supported only for main document fields. Default values
+for fields in embedded documents will be ignored.</li>
+<li>Multiple API endpoints can now target the same database collection. For
+example now you can set both <tt class="docutils literal"><span class="pre">/admins/</span></tt> and <tt class="docutils literal"><span class="pre">/users/</span></tt> to read and write
+from the same collection on the db, <em>people</em>.  The new <tt class="docutils literal"><span class="pre">datasource</span></tt> setting
+allows to explicitly link API resources to database collections. It is
+a dictionary with two allowed keys: <em>source</em> and <em>filter</em>. <em>source</em> dictates
+the database collection consumed by the resource.  <em>filter</em> is the underlying
+query, applied by the API when retrieving and validating data for the
+resource.  Previously, the resource name would dictate the linked datasource
+(and of course you could not have two resources with the same name). This
+remains the default behaviour: if you omit the <tt class="docutils literal"><span class="pre">datasource</span></tt> setting for
+a resource, its name will be used to determine the database collection.</li>
+<li>It is now possibile to set predefined db filters for each resource.
+Predefined filters run on top of user queries (GET requests with <tt class="docutils literal"><span class="pre">where</span></tt>
+clauses) and standard conditional requests (<tt class="docutils literal"><span class="pre">If-Modified-Since</span></tt>, etc.)
+Please note that datasource filters are applied on GET, PATCH and DELETE
+requests. If your resource allows for POST requests (document insertions),
+then you will probably want to set the validation rules accordingly (in our
+example, &#8216;username&#8217; should probably be a required field).</li>
+<li>JSON-Datetime dependency removed.</li>
+<li>Support for Cerberus v0.0.3 and later.</li>
+<li>Support for Flask-PyMongo v0.2.0 and later.</li>
+<li>Repeated XML requests to the same endpoint could occasionally return an
+Internal Server Error (Fixes #8).</li>
+</ul>
+</div>
+<div class="section" id="version-0-0-3">
+<h2>Version 0.0.3<a class="headerlink" href="#version-0-0-3" title="Permalink to this headline">¶</a></h2>
+<p>Released on January 22th 2013.</p>
+<ul class="simple">
+<li>XML rendering love. Lots of love.</li>
+<li>JSON links are always wrapped in a <tt class="docutils literal"><span class="pre">_links</span></tt> dictionary. Key values match
+the relation between the item being represented and the linked resource.</li>
+<li>Streamlined JSON responses. Superflous <tt class="docutils literal"><span class="pre">response</span></tt> root key has been removed
+from JSON payloads. GET requests to resource endpoints: items are now wrapped
+with an <tt class="docutils literal"><span class="pre">_items</span></tt> list. GET requests to item endpoints: item is now at root
+level, with no wrappers around it.</li>
+<li>Support for API versioning through the new API_VERSION configuration setting.</li>
+<li>Boolean values in request forms are now correctly parsed.</li>
+<li>Tests now run under Python 2.6.</li>
+</ul>
+</div>
+<div class="section" id="version-0-0-2">
+<h2>Version 0.0.2<a class="headerlink" href="#version-0-0-2" title="Permalink to this headline">¶</a></h2>
+<p>Released on November 27th 2012.</p>
+<ul class="simple">
+<li>Homepage/api entry point resource links fixed. They had bad &#8216;href&#8217;
+tags which also caused XML validation issues when processing responses
+(especially when accessing the API via browser).</li>
+<li>Version number in &#8216;Server&#8217; response headers.</li>
+<li>Added support for DELETE at resource endpoints. Expected behavior:
+will delete all items in the collection. Disabled by default.</li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">eve.io.mongo.Validator</span></tt> now supports <a class="reference external" href="http://cerberus.readthedocs.org/en/latest/index.html#cerberus.Validator" title="(in Cerberus v0.5)"><tt class="xref py py-class docutils literal"><span class="pre">Validator</span></tt></a>
+signature, allowing for further subclassing.</li>
+</ul>
+</div>
+<div class="section" id="version-0-0-1">
+<h2>Version 0.0.1<a class="headerlink" href="#version-0-0-1" title="Permalink to this headline">¶</a></h2>
+<p>Released on November 20th 2012.</p>
+<ul class="simple">
+<li>First public preview release.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p class="logo">
+  <a href="index.html">
+      <img class="logo" src="_static/eve-sidebar.png" alt="Logo"/>
+  </a>
+</p>
+<p>
+  <iframe src="http://ghbtns.com/github-btn.html?user=nicolaiarocci&repo=eve&type=watch&count=true&size=large"
+    allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p> 
+<!--<h3>About Eve</h3>-->
+<p>
+  You are looking at the documentation of the development version.
+</p>
+<h3>Support Eve</h3>
+<p>If your organization uses Eve, consider financial support:</p>
+<p>
+<a href="https://gum.co/EhzI" class="gumroad-button">Eve Pro</a> <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
+</p>
+<h3>Get Updates</h3>
+<p>Receive updates on new releases and upcoming projects.</p>
+<p>
+<a href="http://tinyletter.com/nicolaiarocci">Subscribe to Newsletter</a>
+</p>
+<h3>Useful Links</h3>
+<ul>
+  <li><a href="http://stackoverflow.com/questions/tagged/eve">Stack Overflow</a></li>
+  <li><a href="https://groups.google.com/forum/#!forum/python-eve">Mailing List</a></li>
+  <li><a href="http://github.com/nicolaiarocci/eve/issues">Issue Tracker</a></li>
+  <li><a href="http://github.com/nicolaiarocci/eve">GitHub</a></li>
+  <li><a href="http://blog.python-eve.org/">Blog</a></li>
+  <li><a href="http://github.com/nicolaiarocci/eve-demo">Demo</a></li>
+  <li><a href="irc://irc.freenode.net/python-eve">IRC</a>
+</ul>
+<h3>Feedback</h3>
+<p>
+  Feedback is greatly appreciated. If you have any questions, comments,
+  random praise, or anonymous threats, get on the <a href="https://groups.google.com/forum/#!forum/python-eve">mailing list</a> or <a href="mailto:eve@nicolaiarocci.com">
+  shoot an email</a>.
+</p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Eve Changelog</a><ul>
+<li><a class="reference internal" href="#version-0-3">Version 0.3</a></li>
+<li><a class="reference internal" href="#version-0-2">Version 0.2</a></li>
+<li><a class="reference internal" href="#version-0-1-1">Version 0.1.1</a><ul>
+<li><a class="reference internal" href="#enhancements">Enhancements</a></li>
+<li><a class="reference internal" href="#fixes">Fixes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#version-0-1">Version 0.1</a><ul>
+<li><a class="reference internal" href="#new-features">New Features</a></li>
+<li><a class="reference internal" href="#id1">Enhancements</a></li>
+<li><a class="reference internal" href="#id2">Fixes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#version-0-0-9">Version 0.0.9</a></li>
+<li><a class="reference internal" href="#version-0-0-8">Version 0.0.8</a></li>
+<li><a class="reference internal" href="#version-0-0-7">Version 0.0.7</a></li>
+<li><a class="reference internal" href="#version-0-0-6">Version 0.0.6</a></li>
+<li><a class="reference internal" href="#version-0-0-5">Version 0.0.5</a></li>
+<li><a class="reference internal" href="#version-0-0-4">Version 0.0.4</a></li>
+<li><a class="reference internal" href="#version-0-0-3">Version 0.0.3</a></li>
+<li><a class="reference internal" href="#version-0-0-2">Version 0.0.2</a></li>
+<li><a class="reference internal" href="#version-0-0-1">Version 0.0.1</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="license.html" title="previous chapter">Licensing</a></li>
+  </ul></li>
+</ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2014. A <a href="http://nicolaiarocci.com">Nicola Iarocci</a> Project.
+  </div>
+  <a href="https://github.com/nicolaiarocci/eve" class="github">
+      <img style="position: absolute; top: 0; right: 0; border: 0;" src="_static/forkme_right_green_007200.png" alt="Fork me on GitHub"  class="github"/>
+  </a>
+  
+  </body>
+</html>

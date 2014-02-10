@@ -1,0 +1,210 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; Eve 0.3-dev documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Eve 0.3-dev documentation" href="index.html" />
+    <link rel="next" title="Quickstart" href="quickstart.html" />
+    <link rel="prev" title="Foreword" href="foreword.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+  
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="quickstart.html" title="Quickstart"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="foreword.html" title="Foreword"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Eve 0.3-dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installation">
+<span id="install"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>This part of the documentation covers the installation of Eve. The first step
+to using any software package is getting it properly installed.</p>
+<div class="section" id="distribute-pip">
+<h2>Distribute &amp; Pip<a class="headerlink" href="#distribute-pip" title="Permalink to this headline">¶</a></h2>
+<p>Installing Eve is simple with <a class="reference external" href="http://www.pip-installer.org/">pip</a>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> pip install eve
+</pre></div>
+</div>
+<p>or, with <a class="reference external" href="http://pypi.python.org/pypi/setuptools">easy_install</a>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> easy_install eve
+</pre></div>
+</div>
+<p>But, you really <a class="reference external" href="http://www.pip-installer.org/en/latest/other-tools.html#pip-compared-to-easy-install">shouldn&#8217;t do that</a>.</p>
+<div class="section" id="cheeseshop-mirror">
+<h3>Cheeseshop Mirror<a class="headerlink" href="#cheeseshop-mirror" title="Permalink to this headline">¶</a></h3>
+<p>If the Cheeseshop is down, you can also install Eve from one of the mirrors.
+<a class="reference external" href="http://crate.io">Crate.io</a> is one of them:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> pip install -i http://simple.crate.io/ eve
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="development-version">
+<h2>Development Version<a class="headerlink" href="#development-version" title="Permalink to this headline">¶</a></h2>
+<p>Eve is actively developed on GitHub, where the code is <a class="reference external" href="https://github.com/nicolaiarocci/eve">always available</a>. If you want to work with the
+development version of Eve, there are two ways: you can either let <cite>pip</cite> pull
+in the development version, or you can tell it to operate on a git checkout.
+Either way, virtualenv is recommended.</p>
+<p>Get the git checkout in a new virtualenv and run in development mode.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> git clone http://github.com/nicolaiarocci/eve.git
+<span class="go">Initialized empty Git repository in ~/dev/eve/.git/</span>
+<span class="gp">$</span> <span class="nb">cd </span>eve
+<span class="gp">$</span> virtualenv venv --distribute
+<span class="go">New python executable in venv/bin/python</span>
+<span class="go">Installing distribute............done.</span>
+<span class="gp">$</span> . venv/bin/activate
+<span class="gp">$</span> python setup.py install
+<span class="go">...</span>
+<span class="go">Finished processing dependencies for Eve</span>
+</pre></div>
+</div>
+<p>This will pull in the dependencies and activate the git head as the current
+version inside the virtualenv.  Then all you have to do is run <tt class="docutils literal"><span class="pre">git</span> <span class="pre">pull</span>
+<span class="pre">origin</span></tt> to update to the latest version.</p>
+<p>To just get the development version without git, do this instead:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> mkdir eve
+<span class="gp">$</span> <span class="nb">cd </span>eve
+<span class="gp">$</span> virtualenv venv --distribute
+<span class="gp">$</span> . venv/bin/activate
+<span class="go">New python executable in venv/bin/python</span>
+<span class="go">Installing distribute............done.</span>
+<span class="gp">$</span> pip install git+git://github.com/nicolaiarocci/eve.git
+<span class="go">...</span>
+<span class="go">Cleaning up...</span>
+</pre></div>
+</div>
+<p>And you&#8217;re done!</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p class="logo">
+  <a href="index.html">
+      <img class="logo" src="_static/eve-sidebar.png" alt="Logo"/>
+  </a>
+</p>
+<p>
+  <iframe src="http://ghbtns.com/github-btn.html?user=nicolaiarocci&repo=eve&type=watch&count=true&size=large"
+    allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p> 
+<!--<h3>About Eve</h3>-->
+<p>
+  You are looking at the documentation of the development version.
+</p>
+<h3>Support Eve</h3>
+<p>If your organization uses Eve, consider financial support:</p>
+<p>
+<a href="https://gum.co/EhzI" class="gumroad-button">Eve Pro</a> <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
+</p>
+<h3>Get Updates</h3>
+<p>Receive updates on new releases and upcoming projects.</p>
+<p>
+<a href="http://tinyletter.com/nicolaiarocci">Subscribe to Newsletter</a>
+</p>
+<h3>Useful Links</h3>
+<ul>
+  <li><a href="http://stackoverflow.com/questions/tagged/eve">Stack Overflow</a></li>
+  <li><a href="https://groups.google.com/forum/#!forum/python-eve">Mailing List</a></li>
+  <li><a href="http://github.com/nicolaiarocci/eve/issues">Issue Tracker</a></li>
+  <li><a href="http://github.com/nicolaiarocci/eve">GitHub</a></li>
+  <li><a href="http://blog.python-eve.org/">Blog</a></li>
+  <li><a href="http://github.com/nicolaiarocci/eve-demo">Demo</a></li>
+  <li><a href="irc://irc.freenode.net/python-eve">IRC</a>
+</ul>
+<h3>Feedback</h3>
+<p>
+  Feedback is greatly appreciated. If you have any questions, comments,
+  random praise, or anonymous threats, get on the <a href="https://groups.google.com/forum/#!forum/python-eve">mailing list</a> or <a href="mailto:eve@nicolaiarocci.com">
+  shoot an email</a>.
+</p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#distribute-pip">Distribute &amp; Pip</a><ul>
+<li><a class="reference internal" href="#cheeseshop-mirror">Cheeseshop Mirror</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#development-version">Development Version</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="foreword.html" title="previous chapter">Foreword</a></li>
+      <li>Next: <a href="quickstart.html" title="next chapter">Quickstart</a></li>
+  </ul></li>
+</ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2014. A <a href="http://nicolaiarocci.com">Nicola Iarocci</a> Project.
+  </div>
+  <a href="https://github.com/nicolaiarocci/eve" class="github">
+      <img style="position: absolute; top: 0; right: 0; border: 0;" src="_static/forkme_right_green_007200.png" alt="Fork me on GitHub"  class="github"/>
+  </a>
+  
+  </body>
+</html>
