@@ -68,7 +68,7 @@ class DemoAuth(BasicAuth):
         return ["$and"],[request_auth_value]
 
  
-app = Eve(__name__,auth=DemoAuth)
+app = Eve(__name__,auth=DemoAuth,settings=config.py)
 app.on_pre_GET += pre_get_callback
 # set the secret key.  keep this really secret:
 app.secret_key = '11111111111111111111111111111'
